@@ -10,7 +10,7 @@ end
 
 function distortionError = motionModel(S)
 % This helper function computes the incorrectness of the motion model    
-    for i = 1 : (Size(S, 2) - 1)
+    for i = 1 : (length(S) - 1)
         % First convert to gray scale image
         input1 = rgb2gray(S{i});
         input2 = rbg2gray(S{i+1});
@@ -40,7 +40,7 @@ function error = sourceVisualDistortion(S)
     % Preset variables
     gamma = 0.45;
     
-    for i = 1 : Size(S, 2)
+    for i = 1 : length(S)
         error = error + gamma * blocknessEstmtn(S{i}) + (1 - gamma) * blurinessEstimtn(S{i});
     end
 end
