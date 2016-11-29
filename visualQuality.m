@@ -6,17 +6,20 @@ function visualQualityDistortion = visualQuality(S)
     alphav = 1.0;
     
     visualQualityDistortion = alpham * motionModel(S) + alphav * sourceVisualDistortion(S);
+    
+    
 end
 
 function distortionError = motionModel(S)
-% This helper function computes the incorrectness of the motion model    
+% This helper function computes the incorrectness of the motion model
+    distortionError = 0;
     for i = 1 : (length(S) - 1)
         % First convert to gray scale image
-        input1 = rgb2gray(S{i});
-        input2 = rbg2gray(S{i+1});
+        input1 = single(rgb2gray(S{i}));
+        input2 = single(rgb2gray(S{i+1}));
         % Compute SIFT features from the input frame and its forward neighbor 
-        [features1, descriptors1] = vl_Sift(input1);
-        [features2, descriptors2] = vl_Sift(input2);
+        [features1, descriptors1] = vl_sift(input1);
+        [features2, descriptors2] = vl_sift(input2);
         % Match the SIFT features from two inputs
         [matches, scores] = vl_ubcmatch(descriptors1, descriptors2);
         im1_ftr_pts = features1([2 1], matches(1, :))';
@@ -32,6 +35,7 @@ function distortionError = motionModel(S)
         % Compute visual quality distortion for frame k
         distortionError = distortionError + sum(dist(:)) / numPts;
     end
+    display(distortionError);
 end
 
 function error = sourceVisualDistortion(S)
@@ -39,8 +43,9 @@ function error = sourceVisualDistortion(S)
 % frame within segment
     % Preset variables
     gamma = 0.45;
-    
+    error = 0;
     for i = 1 : length(S)
         error = error + gamma * blocknessEstmtn(S{i}) + (1 - gamma) * blurinessEstimtn(S{i});
     end
+    display(error);
 end
