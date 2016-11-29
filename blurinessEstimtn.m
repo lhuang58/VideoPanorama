@@ -1,4 +1,4 @@
-function blur = blurinessEstimtn(I)
+function extent = blurinessEstimtn(I)
 %[isBlurring, blur, extent]
 Threshold = 35;
 MinZero = 0.05;

@@ -14,15 +14,15 @@ function distortionError = motionModel(S)
         % First convert to gray scale image
         input1 = rgb2gray(S{i});
         input2 = rbg2gray(S{i+1});
-        % Compute SFT features from the input frame and its forward neighbor 
+        % Compute SIFT features from the input frame and its forward neighbor 
         [features1, descriptors1] = vl_Sift(input1);
         [features2, descriptors2] = vl_Sift(input2);
-        % Match the SFT features from two inputs
+        % Match the SIFT features from two inputs
         [matches, scores] = vl_ubcmatch(descriptors1, descriptors2);
         im1_ftr_pts = features1([2 1], matches(1, :))';
         im2_ftr_pts = features2([2 1], matches(2, :))';
         numPts = size(im1_ftr_pts, 1);
-        % Calculate the homography uSng the matched features points
+        % Calculate the homography using the matched features points
         h = calcHWithRANSAC(im1_ftr_pts, im2_ftr_pts);
         % Calculate mvh(pj,k)
         totalMvh = h * [im2_ftr_pts.'; ones(1, numPts)];
