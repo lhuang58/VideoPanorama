@@ -33,6 +33,7 @@ function blockness = blocknessEstmtn(I)
     A = (A_h + A_v) / 2;
     Z = (Z_h + Z_v) / 2;
     blockness = alpha + beta * B.^gamma1 * A.^gamma2 * Z.^gamma3;
+    blockness = inv(blockness);
 end
 
 

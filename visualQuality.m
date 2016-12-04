@@ -6,8 +6,6 @@ function visualQualityDistortion = visualQuality(S)
     alphav = 1.0;
     
     visualQualityDistortion = alpham * motionModel(S) + alphav * sourceVisualDistortion(S);
-    
-    
 end
 
 function distortionError = motionModel(S)
@@ -45,6 +43,9 @@ function error = sourceVisualDistortion(S)
     gamma = 0.45;
     error = 0;
     for i = 1 : length(S)
+        % The blockiness from the paper is in [1, 10] 1 is worst, 10 is
+        % best, here we might need take the reciprocal of the score to
+        % obtain what Lui et al. suggests
         error = error + gamma * blocknessEstmtn(S{i}) + (1 - gamma) * blurinessEstimtn(S{i});
     end
     display(error);
