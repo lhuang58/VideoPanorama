@@ -1,0 +1,3 @@
+frames 562-691
+using hw4 panorama
+output building562-691 - testSeg2

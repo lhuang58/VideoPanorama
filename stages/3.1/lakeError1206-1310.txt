@@ -1,0 +1,3 @@
+frames 1206-1310
+using hw4 panorama
+output lake1206-1310 - testSeg1
