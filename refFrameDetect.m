@@ -1,4 +1,4 @@
-function referenceFrame = refFrameDetect(S)
+function [referenceFrame,H_map_temp] = refFrameDetect(S)
 % This function will return a reference from a given video segment
     
     frameDistances = cell(1, length(S));
@@ -11,6 +11,9 @@ function referenceFrame = refFrameDetect(S)
         % other frame fi to f1. And calculate all the frames in the segment
         % choose the one whose panorama is smallest
         H_map = calMapping(H_left, H_right, i);
+        if i == 3
+            H_map_temp = H_map;
+        end
         frameDistances{i} = centerDistance(H_map, S);  
     end
     % Find the smallest distance and return the index accordingly.
@@ -18,14 +21,14 @@ function referenceFrame = refFrameDetect(S)
     referenceFrame = index;
 end
 
-function [H_list_left, H_list_right] = generateH_lists(S)
+function [H_list_r2l, H_list_l2r] = generateH_lists(S)
     for i = 1 : length(S)
         input_image = single(rgb2gray(S{i}));
         [keypoints{i}, descriptors{i}] = vl_sift(input_image);
     end
     % Preallocate for performance
-    H_list_left = cell(1, length(S) - 1);
-    H_list_right = cell(1, length(S) - 1);
+    H_list_r2l = cell(1, length(S) - 1);
+    H_list_l2r = cell(1, length(S) - 1);
     
     for i=1:length(S)-1
 
@@ -46,27 +49,27 @@ function [H_list_left, H_list_right] = generateH_lists(S)
         % into coordinates in image1. Function calcHWithRANSAC currently uses all
         % pairs of matching feature points returned by the SIFT algorithm.
         % Modify the calcHWithRANSAC function to add code for implementing RANSAC.
-        H_list_left{i} = calcHWithRANSAC(im1_ftr_pts, im2_ftr_pts);
-        H_list_right{i} = calcHWithRANSAC(im2_ftr_pts, im1_ftr_pts);
+        H_list_r2l{i} = calcHWithRANSAC(im1_ftr_pts, im2_ftr_pts);
+        H_list_l2r{i} = calcHWithRANSAC(im2_ftr_pts, im1_ftr_pts);
     end
 end
 
 
-function H_map = calMapping(H_list_left, H_list_right, referenceIndex)
+function H_map = calMapping(H_list_r2l, H_list_l2r, referenceIndex)
 % This function will return a list of homography 
     % Calculate homography according to reference frame index
-    H_map = cell(1, length(H_list_left) + 1);
+    H_map = cell(1, length(H_list_r2l) + 1);
     % The homography for the reference frame is identity matrix
-    H_map{referenceIndex} = eye(size(H_list_left{1}));
+    H_map{referenceIndex} = eye(size(H_list_r2l{1}));
     % If reference frame is at index i, then we calculate the homography
     % for frames from 1 to i by Hi-1i*Hi-2i-1*...*H23H12 where Hij is the
     % homography mapping i to j
     for i = referenceIndex - 1: -1 : 1
-        H_map{i} = H_list_left{i} * H_map{i + 1};
+        H_map{i} = H_list_l2r{i} * H_map{i + 1};
     end
     
     for i = referenceIndex + 1: length(H_map)
-        H_map{i} = H_list_right{i - 1} * H_map{i - 1};
+        H_map{i} = H_list_r2l{i - 1} * H_map{i - 1};
     end
 end
 
