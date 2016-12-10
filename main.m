@@ -1,6 +1,7 @@
 %% This is the main function for assessing given video segments
 % Read given video segments
 video = VideoReader('./testVideoSegs/testSeg1.avi');
+%video = VideoReader('./testVideoSegs/testSeg2.avi');
 % Convert video to cell array
 source = {};
 count = 1;
@@ -11,16 +12,18 @@ while hasFrame(video)
 end
 
 % Find the extent of scene
-[extent, refereneFrame] = extentOfScene(source);
+[extent, referenceFrame] = extentOfScene(source);
+referenceFrame
+imshow(extent)
 % Start from the referene frame as initial segment, append S with its
 % nearest neighbor
-threshold = 0;
-alpha = 0;
-leftFrame = {};
+%threshold = 0;
+%alpha = 0;
+%leftFrame = {};
 
-while(threshold < alpha)
+%while(threshold < alpha)
     % First append two adjacent frames of initial segment
     
     % Calculate the visual distortion value
-    visualError = visualQuality()
-end
+%    visualError = visualQuality()
+%end

@@ -1,7 +1,7 @@
 function [extent, ref] = extentOfScene(S)
 % This function returns the extent of the scene given a video segment S
     [index, H_map] = refFrameDetect(S);
-    
+    ref = index;
     % Compute the size of the output panorama image
     min_row = 1;
     min_col = 1;
@@ -10,7 +10,7 @@ function [extent, ref] = extentOfScene(S)
 
     % for each input image
     for i=1:length(H_map)
-        cur_image = imread(fullfile(imagepath, imagelist(i).name));
+        cur_image = S{i};
         [rows,cols,~] = size(cur_image);
 
         % create a matrix with the coordinates of the four corners of the
@@ -61,7 +61,7 @@ function [extent, ref] = extentOfScene(S)
         % Note:  Some values will return as NaN ("not a number") because they
         % map to points outside the domain of the input image
 
-        cur_image = im2double(imread(fullfile(imagepath, imagelist(i).name)));
+        cur_image = im2double(S{i});
 
         % Bilinear interpolate color values
         curr_warped_image = zeros(panorama_height, panorama_width, 3);
@@ -104,5 +104,6 @@ function [extent, ref] = extentOfScene(S)
         %panorama_image = panorama_image + blended_image;
 
     end
+    extent = panorama_image;
 end
 

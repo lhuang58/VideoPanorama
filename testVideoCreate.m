@@ -1,17 +1,17 @@
 %% Create video object for test videos
 % Extract all the frame from test video
-video = VideoReader('testVideo1.mp4');
+video = VideoReader('./testVideoSegs/longSeg.mp4');
 count = 1;
-filePath = './testVideo1';
+filePath = './longSeg';
 if 7 ~= exist(filePath, 'dir')
     mkdir(filePath); 
 end
 type = '.jpg';
 while hasFrame(video)
     frame = readFrame(video);
+    fileName = strcat(filePath, '/', int2str(int64(count)), type);
     imwrite(frame, fileName);
     count = count + 1;
-    fileName = strcat(filePath, '/', int2str(int64(count)), type);
 end
 %% Convert image sequence into video
 workingDir = 'testSeg1';

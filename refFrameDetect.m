@@ -1,4 +1,4 @@
-function [referenceFrame,H_map_temp] = refFrameDetect(S)
+function [referenceFrame,H_map_final] = refFrameDetect(S)
 % This function will return a reference from a given video segment
     
     frameDistances = cell(1, length(S));
@@ -11,14 +11,12 @@ function [referenceFrame,H_map_temp] = refFrameDetect(S)
         % other frame fi to f1. And calculate all the frames in the segment
         % choose the one whose panorama is smallest
         H_map = calMapping(H_left, H_right, i);
-        if i == 3
-            H_map_temp = H_map;
-        end
         frameDistances{i} = centerDistance(H_map, S);  
     end
     % Find the smallest distance and return the index accordingly.
     [minValue, index] = min(cell2mat(frameDistances));
     referenceFrame = index;
+    H_map_final = calMapping(H_left, H_right, referenceFrame);
 end
 
 function [H_list_r2l, H_list_l2r] = generateH_lists(S)
