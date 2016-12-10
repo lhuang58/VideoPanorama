@@ -25,6 +25,10 @@ function distortionError = motionModel(S)
         numPts = size(im1_ftr_pts, 1);
         % Calculate the homography using the matched features points
         h = calcHWithRANSAC(im1_ftr_pts, im2_ftr_pts);
+        if sum(h(:)) == 0
+            distortionError = inf;
+            return;
+        end
         % Calculate mvh(pj,k)
         totalMvh = h * [im2_ftr_pts.'; ones(1, numPts)];
         % TODO: Compute the displacement between two SIFT feature points
@@ -33,7 +37,6 @@ function distortionError = motionModel(S)
         % Compute visual quality distortion for frame k
         distortionError = distortionError + sum(dist(:)) / numPts;
     end
-    display(distortionError);
 end
 
 function error = sourceVisualDistortion(S)
@@ -48,5 +51,4 @@ function error = sourceVisualDistortion(S)
         % obtain what Lui et al. suggests
         error = error + gamma * blocknessEstmtn(S{i}) + (1 - gamma) * blurinessEstimtn(S{i});
     end
-    display(error);
 end
