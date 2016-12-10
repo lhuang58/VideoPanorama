@@ -1,0 +1,214 @@
+
+two seg1
+//lake -> building
+
+//transition inf
+
+distortion =
+
+  236.2341
+
+
+distortion =
+
+  251.6489
+
+
+distortion =
+
+  324.3428
+
+
+distortion =
+
+  312.1550
+
+
+distortion =
+
+  348.7998
+
+
+distortion =
+
+   Inf
+
+
+distortion =
+
+  106.4736
+
+
+distortion =
+
+   94.4642
+
+
+distortion =
+
+   89.7201
+
+
+distortion =
+
+   86.9873
+
+
+distortion =
+
+   80.3788
+
+
+distortion =
+
+  120.4777
+
+
+
+//two seg2 turn1
+shanghai -> building
+//transition 392.2778
+
+distortion =
+
+   68.5264
+
+
+distortion =
+
+   93.5030
+
+
+distortion =
+
+   93.9650
+
+
+distortion =
+
+   89.1761
+
+
+distortion =
+
+  103.6064
+
+
+distortion =
+
+  119.2307
+ 
+
+distortion =
+
+  392.2778
+
+
+distortion =
+
+  106.9031
+
+
+distortion =
+
+   96.1350
+
+
+distortion =
+
+   92.0051
+
+
+distortion =
+
+   89.6943
+
+
+distortion =
+
+   78.8060
+
+
+distortion =
+
+   97.0810
+
+
+distortion =
+
+  120.5903
+
+
+
+//two seg2 turn2
+shanghai -> building
+//transition 402.6325
+
+distortion =
+
+   68.5260
+
+
+distortion =
+
+   93.5004
+
+
+distortion =
+
+   93.9667
+
+
+distortion =
+
+   89.1721
+
+
+distortion =
+
+  103.6035
+
+
+distortion =
+
+  119.2404
+
+
+distortion =
+
+  402.6325
+
+
+distortion =
+
+  106.9026
+
+
+distortion =
+
+   96.1451
+
+
+distortion =
+
+   91.9936
+
+
+distortion =
+
+   89.6912
+
+
+distortion =
+
+   78.8078
+
+
+distortion =
+
+   97.0818
+
+
+distortion =
+
+  120.4151
