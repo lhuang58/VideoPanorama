@@ -14,14 +14,14 @@ while hasFrame(video)
     count = count + 1;
 end
 %% Convert image sequence into video
-workingDir = 'testSeg1';
-sourceVideo = VideoReader('testVideo1.mp4');
+workingDir = 'testImages';
+sourceVideo = VideoReader('testSeg1.avi');
 % Create a new test segment
 
 imageNames = dir(fullfile('testImages','*.jpg'));
 imageNames = {imageNames.name}';
 
-outputVideo = VideoWriter(fullfile(workingDir,'shuttle_out.mp4'));
+outputVideo = VideoWriter(fullfile(workingDir,'shuttle_out'));
 outputVideo.FrameRate = sourceVideo.FrameRate;
 open(outputVideo)
 
