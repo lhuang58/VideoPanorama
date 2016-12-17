@@ -8,14 +8,15 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{hyperref}
 
 \graphicspath{ {images/} }
 
 \renewcommand{\baselinestretch}{1.2}
 
-\title{Discovering Panoramas in Web Videos}
-\author{Lingfeng Huang, Fang Wang}
+\title{Discovering Panoramas in Web Videos \\ lhuang58.github.io}
 
+\author{Lingfeng Huang, Fang Wang}
 \date{11/2016}
 
 \begin{document}
@@ -27,7 +28,6 @@ taken by people who physically present at the place. In this project, we will im
 to solve the problem by selecting optimal segments within a given web videos, then perform synthesizing to obtain panoramas. This 
 whole procedure is basically a optimization problem where we optimize the three criteria which are wide field of view, mosaicability, and high image 
 quality.
-
 \section{Introduction}
 The emerge of the idea "Panorama" has to be dated back to early 20 A.D. and was a means of generating an 'panoptic' view of a vista \cite{wikipedia}. Nowadays, 
 with the help of advancement of technology, people are able to create desired panorama by simply rotating their cell phones and clicking the shot button. The process
@@ -116,7 +116,7 @@ Then the extent of scene is defined as:
 \end{equation}
 In Lui et al. paper, they used generic polygon clipping for finding the minimum area covered. However, we used another approach.  Although the accuracy declines, the complexity reduces in decent amount, we choose to find the distance between the center of reference frame and that of all other frames as follows:
 \begin{equation}
-\frac{1}{\mathit{n}} \sum_{\mathit{f \in S_i}}  \lVert \mathit{C_r}, \mathit{f_r} \rVert
+\frac{1}{\mathit{n}} \sum_{\mathit{f \in S_i}}  \lVert \mathit{C_r}, \mathit{C_f} \rVert
 \end{equation}
 Where $\mathit{n}$ is the number of frames within the segment, $\mathit{C_r}$ is the center pixel of the reference frame and $\mathit{f_r}$ is the center pixel in a given frame.
 \begin{figure}[h]
@@ -145,8 +145,50 @@ Where $\mathit{n}$ is the number of frames within the segment, $\mathit{C_r}$ is
 \end{figure}
 Figure 4 demonstrates when reference frame is the most left frame (the first frame in the image sequence), the middle frame and the right most frame. However, due to the relatively small distortion since this image sequence only has 5 images, the visual difference between three panoramas is subtle. 
 
-\section{Experiments}
-We randomly select some videos from Youtube and manually chop the video into several segments. Lui et al. use histogram based shot boundary detection to divide the video, and in order to simplify the process, we choose to feed our algorithm with preprocessed video segments.
+\section{Experiments and Results for Determining Panorama}
+We randomly select some videos from Youtube and manually cut the video into several segments. Lui et al. use histogram based shot boundary detection to divide the video, and we use another approach which we will describe in next section. In order to test the correctness of the three panorama synthesis criteria, we choose to feed our algorithm with preprocessed video segments.\\
+\\
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=9.5cm, height=3cm]{building562-691}
+	\caption{Stitched using a video segment from West Lake}
+\end{figure}\\
+In figure 5, the motion error we estimated is 598 (rounded to nearest integer) and since this segment has over 130 frames, so on average each frame has 4.6 error which is considered a good score in our standard. The image quality error for this segment is 23 which is also a relatively good score for a 360p video. Therefore, we obtained a decent panorama from this segment.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=9.5cm, height=3cm]{shanghai1309-1440}
+	\caption{Stitched using a video segment from Shanghai shot by drone}
+\end{figure}
+Figure 6 shows a shot from Shanghai, and the computed motion error is 587. Because the drone is very stable in the original video, the motion error is also what we expected. We also discovered that the image quality error of 360p videos from Youtube usually ranges from 20 to 45. Therefore, the panorama synthesized is also in good quality with only a subtle distortion. 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=9.5cm, height=3cm]{lakeError1206-1310}
+	\caption{Stitched using a video segment from West Lake}
+\end{figure}\\
+Figure 7 is a failure. In the segment, we observed a large amount of object motion which is from the waves and the boats on the lake. As a result, the motion error for this segment is 1521. In addition, due to the panorama. 
+As a conclusion, our implementation of judging a segment works as expected and is able to distinguish between segments with different quality.
+
+\section{Video Segment Fetching}
+Lui et al. preprocess the given video by applying histogram based method for shot boundary detection and shot boundary is detected whenever the histogram intersection between two adjacent frames is below a threshold. 
+However, we detect scene boundary by using the visual quality distortion.The idea is that in order to calculate the homography between two adjacent frames, we should have at least 4 SIFT matching pairs. According to our experiments, the video segments we have do not always have enough pairs to calculate homography when two frames are at scene boundary and even when they have enough pairs to calculate the visual quality error tend to be high. Thus, we cut the whole video into 20 frames segments, then compute visual quality error for each segments and by setting the visual quality error to infinity when encounter scene transition segment and dropping that segment we are able to append all adjacent segments to obtain a optimal segement for panorama stiching. \\
+We define the types of videos that we might encounter while fetching as follows: \\
+\\
+Case 1: A scene that is not capable of synthesizing panorama (bad scene) followed by a scene that is proper source for panorama (good scene) or a good scene followed by a bad scene, in both cases we want to only obtain one panorama from the good scene:
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=10cm]{bad-good-fig}
+	\caption{Visual quality error for Case 1}
+\end{figure}\\
+Above figure shows that the overrall visual quality error for bad scene segments are high (over 250) and we have this sudden increase in the error at segment 6, thus we can say segment 6 has a high possibility of containing a scene transition. And we want drop all the segments before segment 7 due to high error and synthesize panorama use only segment 7 to 12.\\
+Case 2: A good scene followed a good scene followed. In this situation, we want to get two panoramas :
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=10cm]{good-good-fig}
+	\caption{Visual quality error for Case 2}
+\end{figure}\\
+
+It can be observed that before and after segment 7 there are two smooth segments series and a sudden increase in visual quality error at segment 7. In this case, we want to drop segment 7 and synthesize two panoramas from segment 1 to 5 and segment 7 to the rest segments.\\
+Case 3: A bad scene followed by a bad scene. In this situation, we want to drop both scenes, and we can expect the overrall visual quality errors are relatively high across all the segments.
 \section{Limitations}
-First of all, this whole process is not fully automated. At this point, we are not able to pass a whole video and get several possible results. Second, the complexity of this algorithm seems relatively high since we need to recalculate the homographies between adjacent frame for each iteration when we calculate the extent of scene. In addition, the run time for computing blurriness for each frame is also relatively high. 
+First of all, the whole process is significantly very time consuming. Because we are computing the visual quality score in each segments due to our segmentation algorithm, the complexity tends to be very large. During our experiments, a 250 frames video will take raghly 40 seconds to process. Another limitation is that because we are dropping the whole 20 frames segment with scene transition the field of view of the final panoramas are reduced in small amount. 
 \end{document}
