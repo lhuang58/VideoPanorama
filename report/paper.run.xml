@@ -41,17 +41,19 @@
   >
 ]>
 <requests version="1.0">
-  <internal package="biblatex" priority="9" active="1">
+  <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>Untitled.bcf</file>
+      <file>paper.aux</file>
+      <file>paper-blx.bib</file>
     </provides>
     <requires type="dynamic">
-      <file>Untitled.bbl</file>
+      <file>paper.bbl</file>
     </requires>
     <requires type="static">
       <file>blx-dm.def</file>
       <file>blx-compat.def</file>
+      <file>blx-bibtex.def</file>
       <file>biblatex.def</file>
       <file>numeric.bbx</file>
       <file>standard.bbx</file>
@@ -60,23 +62,31 @@
       <file>english.lbx</file>
     </requires>
   </internal>
-  <external package="biblatex" priority="5" active="1">
-    <generic>biber</generic>
+  <external package="biblatex" priority="5" active="0">
+    <generic>bibtex</generic>
     <cmdline>
-      <binary>biber</binary>
-      <infile>Untitled</infile>
+      <binary>bibtex</binary>
+      <option>-min-crossrefs 2</option>
+      <infile>paper</infile>
     </cmdline>
     <input>
-      <file>Untitled.bcf</file>
+      <file>paper.aux</file>
     </input>
     <output>
-      <file>Untitled.bbl</file>
+      <file>paper.bbl</file>
     </output>
     <provides type="dynamic">
-      <file>Untitled.bbl</file>
+      <file>paper.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>Untitled.bcf</file>
+      <file>paper.aux</file>
+      <file>paper-blx.bib</file>
+    </requires>
+    <requires type="editable">
+      <file>references.bib</file>
+    </requires>
+    <requires type="static">
+      <file>biblatex.bst</file>
     </requires>
   </external>
 </requests>

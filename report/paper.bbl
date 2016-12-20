@@ -1,0 +1,154 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.7 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\sortlist[entry]{nty/global/}
+  \entry{Liu}{inproceedings}{}
+    \name{author}{3}{}{%
+      {{hash=LF}{%
+         family={Liu},
+         family_i={L\bibinitperiod},
+         given={Feng},
+         given_i={F\bibinitperiod},
+      }}%
+      {{hash=HYH}{%
+         family={Hu},
+         family_i={H\bibinitperiod},
+         given={Yu\bibnamedelima Hen},
+         given_i={Y\bibinitperiod\bibinitdelim H\bibinitperiod},
+      }}%
+      {{hash=GM}{%
+         family={Gleicher},
+         family_i={G\bibinitperiod},
+         given={Michael},
+         given_i={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LFHYHGM1}
+    \strng{fullhash}{LFHYHGM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{booktitle}{Proceedings of the 16th International Conference on
+  Multimedia 2008, Vancouver, British Columbia, Canada, October 26-31, 2008}
+    \verb{doi}
+    \verb 10.1145/1459359.1459404
+    \endverb
+    \field{pages}{329\bibrangedash 338}
+    \field{title}{Discovering panoramas in web videos}
+    \verb{url}
+    \verb http://doi.acm.org/10.1145/1459359.1459404
+    \endverb
+    \field{year}{2008}
+  \endentry
+
+  \entry{wikipedia}{misc}{}
+    \list{publisher}{1}{%
+      {Wikimedia Foundation}%
+    }
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{title}{Panorama}
+    \verb{url}
+    \verb https://en.wikipedia.org/wiki/Panorama
+    \endverb
+    \field{journaltitle}{Wikipedia}
+  \endentry
+
+  \entry{Wang}{inproceedings}{}
+    \name{author}{3}{}{%
+      {{hash=SHR}{%
+         family={Sheikh},
+         family_i={S\bibinitperiod},
+         given={Hamid\bibnamedelima R.},
+         given_i={H\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+      {{hash=WZ}{%
+         family={Wang},
+         family_i={W\bibinitperiod},
+         given={Zhou},
+         given_i={Z\bibinitperiod},
+      }}%
+      {{hash=BAC}{%
+         family={Bovik},
+         family_i={B\bibinitperiod},
+         given={Alan\bibnamedelima C.},
+         given_i={A\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SHRWZBAC1}
+    \strng{fullhash}{SHRWZBAC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{booktitle}{{ICIP} {(1)}}
+    \verb{doi}
+    \verb 10.1109/ICIP.2002.1038064
+    \endverb
+    \field{pages}{477\bibrangedash 480}
+    \field{title}{No-reference perceptual quality assessment of {JPEG}
+  compressed images}
+    \verb{url}
+    \verb http://dx.doi.org/10.1109/ICIP.2002.1038064
+    \endverb
+    \field{year}{2002}
+  \endentry
+
+  \entry{Tong}{inproceedings}{}
+    \name{author}{4}{}{%
+      {{hash=TH}{%
+         family={Tong},
+         family_i={T\bibinitperiod},
+         given={Hanghang},
+         given_i={H\bibinitperiod},
+      }}%
+      {{hash=LM}{%
+         family={Li},
+         family_i={L\bibinitperiod},
+         given={Mingjing},
+         given_i={M\bibinitperiod},
+      }}%
+      {{hash=ZH}{%
+         family={Zhang},
+         family_i={Z\bibinitperiod},
+         given={HongJiang},
+         given_i={H\bibinitperiod},
+      }}%
+      {{hash=ZC}{%
+         family={Zhang},
+         family_i={Z\bibinitperiod},
+         given={Changshui},
+         given_i={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{TH+1}
+    \strng{fullhash}{THLMZHZC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{booktitle}{Proceedings of the 2004 {IEEE} International Conference
+  on Multimedia and Expo, {ICME} 2004, 27-30 June 2004, Taipei, Taiwan}
+    \field{pages}{17\bibrangedash 20}
+    \field{title}{Blur detection for digital images using wavelet transform}
+    \field{year}{2004}
+  \endentry
+\endsortlist
+\endinput
